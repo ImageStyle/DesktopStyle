@@ -12,7 +12,7 @@ DEVICE = '/gpu:0'
 
 def ffwd(checkpoint_dir, device_t='/gpu:0'):
 
-    img_shape = (100,100,3)
+    img_shape = (500,500,3)
 
     g = tf.Graph()
     soft_config = tf.ConfigProto(allow_soft_placement=True)
@@ -37,7 +37,7 @@ def ffwd(checkpoint_dir, device_t='/gpu:0'):
 
             ret, frame = video_stream.read()
 
-            img = cv2.resize(frame, (100,100))
+            img = cv2.resize(frame, (img_shape[0],img_shape[1]))
             cv2.imshow('frame', img)
             #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -47,7 +47,7 @@ def ffwd(checkpoint_dir, device_t='/gpu:0'):
             # save_img(path_out, _preds[j
             #print(_preds[0].shape)
             result = np.clip(_preds[0], 0, 255).astype(np.uint8)
-            cv2.imshow('frame', cv2.resize(result, (100,100)))
+            cv2.imshow('frame', cv2.resize(result, (img_shape[0],img_shape[1])))
 
 def build_parser():
     parser = ArgumentParser()
